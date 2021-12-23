@@ -3,55 +3,86 @@ public class Case {
     private int couleur;
     private boolean recouverte;
     private char lettre;
-    
+
     /**
-     * pré-requis : uneCouleur est un entier entre 1 et 5
-     * action : constructeur de Case
+     * Constructeur Case
+     * Pré-requis: uneCouleur est un entier entre 1 et 5.
+     * Action: Crée une case Case dont la couleur est un entier compris entre 1 et
+     * 5.
+     * 
+     * @param uneCouleur
      */
-    public Case (int uneCouleur){
-        if(uneCouleur>=1 && uneCouleur<=5){
-            this.couleur=uneCouleur;
-        }
+    public Case(int uneCouleur) {
+        this.couleur = uneCouleur;
     }
 
     /**
-     * résultat : la couleur de this, un nombre entre 1 et 5
+     * Pré-requis: l'attribut couleur de this est un entier compris entre 1 et 5.
+     * Accesseur en lecture de l'attribut couleur.
+     * 
+     * @return un entier this.couleur
      */
-    public int getCouleur(){
+    public int getCouleur() {
         return this.couleur;
     }
 
     /**
-     * pré-requis : cette case est recouverte
+     * Pré-requis: La case est recouverte.
+     * Accesseur en lecture de l'attribut lettre.
+     * 
+     * @return un caractère this.lettre
      */
-    public char getLettre(){
-        //if(la case.estRecouverte){
-            return this.lettre;
-        //}
+    public char getLettre() {
+        return this.lettre;
     }
 
     /**
-     * pré-requis : let est une lettre majuscule
+     * Pré-requis : le caractère let passé en paramètre est une lettre majuscule.
+     * Définition de la valeur de this.lettre
+     * 
+     * @param let
+     * @return void
      */
-    public void setLettre(char let){
-        if(Character.isUpperCase(let)){
-            this.lettre = let;
-        }
+    public void setLettre(char let) {
+        this.lettre = let;
     }
 
     /**
-     * résultat : vrai ssi la case est recouverte par une lettre
+     * Méthode estRecouverte
+     * Action: Initialise un booléen res, qui prendre la valeur vrai si la case est
+     * recouverte.
+     * 
+     * @return un booleén res
      */
-    public boolean estRecouverte (){
+    public boolean estRecouverte() {
         boolean res = false;
-        //if(la case est recouverte){
-            return res;
-        //}
+        if (this.recouverte == true) {
+            res = true;
+        }
+        return res;
     }
 
-    public String toString (){
+    /**
+     * Méthode toString
+     * Action: initialise une chaîne de caractère qui donnera les informations sur
+     * la case.
+     * 
+     * @return une chaîne de caractères res
+     */
+    public String toString() {
         String res = "";
-        //faire la méthode toString.
+        if (estRecouverte()) {
+            if (Character.isLowerCase(this.lettre)) {
+                Character.toUpperCase(this.lettre);
+            }
+            res = res + this.lettre;
+        } else {
+            if (this.couleur != 1) {
+                res = res + this.couleur;
+            } else {
+                res = res + " ";
+            }
+        }
         return res;
     }
 

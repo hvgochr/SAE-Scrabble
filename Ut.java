@@ -227,10 +227,22 @@ public class Ut {
 	// Resultat : vrai ssi an est bissextile
 	return an % 400 == 0 || an % 4 == 0 && an % 100 != 0;
     }
+
+	public static boolean estUneMajuscule(char c){
+		boolean res = false;
+		int i = c;
+		if(i>=65 && i<=90){
+			res=true;
+		}
+		return res;
+	}
+
+	public static int majToIndex(char c){
+		return(int)(c-65);
+	}
+
+	public static char indexToMaj(int i){
+		return(char)(i + 65);
+	}
     
 } // end class
-
-
-
-
-	

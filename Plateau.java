@@ -62,27 +62,62 @@ public class Plateau {
                 res = res + "  " + this.g[i - 1][j].toString() + "  |";
             }
             res = res + "\n"
-                    + "-----------------------------------------------------------------------------------------------"
-                    + "\n";
+                      + "-----------------------------------------------------------------------------------------------"
+                      + "\n";
         }
         return res;
     }
 
     public boolean placementValide(String mot, int numLigne, int numColonne, char sens, MEE e){
-        boolean res;
-        boolean vide = true;
-        if(vide){
-            if(mot.length()>=2 /* && reste des conditions dans le cas où le plateau est vide*/){
-                res = true;
-                vide = false;
+        boolean res = false;
+        //Cas où le plateau est vide, et donc que la case centrale est vide.
+        if(this.g[7][7].estRecouverte()==false){
+            if(mot.length()>=2){
+                //Cas où le plateau est vide, et que le sens de placement du mot est horizontal.
+                if(sens=='h'){
+                    if(numColonne+mot.length()<=15 && numColonne<=8 && 8<=numColonne+mot.length()/*manque mot présent dans chevalet*/){
+                        
+                    }
+                }
+                //Cas où le plateau est vide, et que le sens de placement du mot est vertical.
+                else if(sens=='v'){
+                    if(numLigne+mot.length()<=15 && numLigne<=8 && 8<= numLigne+mot.length()/*manque mot présent dans chevalet*/){
+                        
+                    }
+                }
+            }    
+        }
+        //Cas où le plateau n'est pas vide, et donc que la case centrale est recouverte.
+        else{
+            //Cas où le plateau est vide, et que le sens de placement du mot est horizontal.
+            if(sens=='h'){
+                if(numColonne+mot.length()<=15 && this.g[numLigne][numColonne-1].estRecouverte()==false && this.g[numLigne][numColonne+mot.length()].estRecouverte()==false){
+
+                }
             }
-        }else{
-            if(/*conditions dans le cas où le plateau n'est pas vide*/){
-                res=true;
-                vide = false;
+            //Cas où le plateau est vide, et que le sens de placement du mot est vertical.
+            else if(sens=='v'){
+                if(numLigne+mot.length()<=15 && this.g[numLigne-1][numColonne].estRecouverte()==false && this.g[numLigne+mot.length()][numColonne].estRecouverte()==false){
+                    //Manque si la zone avec case avec jeton et case sans jeton, si la lettre du jeton est la même que celle du mot à placer dans la case, et si le mot est présent dans le chevalet.
+                }
             }
         }
         return res;
+    }
+
+    public int nbPointsPlacement(String mot, int numLigne, int numColonne, char sens, int[] nbPointsJetons){
+        int res=0;
+        return res;
+    }
+
+    public int place(String mot, int numLigne, int numColonne, char sens, MEE e){
+        int res = 0;
+        return res;
+    }
+
+    public static void main (String[]args){
+        Plateau p = new Plateau();
+        Ut.afficher(p.toString());
     }
 
 }

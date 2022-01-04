@@ -14,6 +14,10 @@ public class Joueur {
         return res;
     }
 
+    public MEE getChevalet() {
+        return this.chevalet;
+    }
+
     public int getScore() {
         return this.score;
     }

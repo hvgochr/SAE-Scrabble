@@ -68,56 +68,152 @@ public class Plateau {
         return res;
     }
 
+    /**
+     * Méthode placementValide
+     * Action: Vérifie toutes les conditions pour que le placement d'un mot soit valide au scrabble, et retourne vrai si 
+     * toutes ces conditions sont valides.
+     * 
+     * @param mot
+     * @param numLigne
+     * @param numColonne
+     * @param sens
+     * @param e
+     * @return un booléen res
+     */
     public boolean placementValide(String mot, int numLigne, int numColonne, char sens, MEE e){
         boolean res = false;
+        StringBuilder mot2 = new StringBuilder(mot);
+        int caseRecouverte = 0;
+        int caseVide = 0;
         //Cas où le plateau est vide, et donc que la case centrale est vide.
         if(this.g[7][7].estRecouverte()==false){
             if(mot.length()>=2){
                 //Cas où le plateau est vide, et que le sens de placement du mot est horizontal.
                 if(sens=='h'){
-                    if(numColonne+mot.length()<=15 && numColonne<=8 && 8<=numColonne+mot.length()/*manque mot présent dans chevalet*/){
-                        
+                    if(numColonne+mot.length()<=15 && numColonne<=7 && 7<=numColonne+mot.length() && e.contient(mot)){
+                        res = true;
                     }
                 }
                 //Cas où le plateau est vide, et que le sens de placement du mot est vertical.
                 else if(sens=='v'){
-                    if(numLigne+mot.length()<=15 && numLigne<=8 && 8<= numLigne+mot.length()/*manque mot présent dans chevalet*/){
-                        
+                    if(numLigne+mot.length()<=15 && numLigne<=7 && 7<= numLigne+mot.length() && e.contient(mot)){
+                        res=true;
                     }
                 }
             }    
         }
         //Cas où le plateau n'est pas vide, et donc que la case centrale est recouverte.
         else{
-            //Cas où le plateau est vide, et que le sens de placement du mot est horizontal.
+            //Cas où le plateau n'est pas vide, et que le sens de placement du mot est horizontal.
             if(sens=='h'){
-                if(numColonne+mot.length()<=15 && this.g[numLigne][numColonne-1].estRecouverte()==false && this.g[numLigne][numColonne+mot.length()].estRecouverte()==false){
-
+                for(int i=numColonne; i<numColonne+mot.length(); i++){
+                    if(this.g[numLigne][i].estRecouverte() && this.g[numLigne][i].getLettre()==mot.charAt(i)){
+                        mot2.deleteCharAt(i);
+                        caseRecouverte++;
+                    }else{
+                        caseVide++;
+                    }
+                }
+                if(numColonne+mot.length()<=15){
+                    if(this.g[numLigne][numColonne-1].estRecouverte()==false || numColonne==0){
+                        if(this.g[numLigne][numColonne+mot.length()].estRecouverte()==false || numColonne+mot.length()==15){
+                            if(caseRecouverte>=1 && caseVide>=1){
+                                if(e.contient(mot2.toString())){
+                                    res = true;
+                                }
+                            }
+                        }
+                    }
                 }
             }
-            //Cas où le plateau est vide, et que le sens de placement du mot est vertical.
+            //Cas où le plateau n'est pas vide, et que le sens de placement du mot est vertical.
             else if(sens=='v'){
-                if(numLigne+mot.length()<=15 && this.g[numLigne-1][numColonne].estRecouverte()==false && this.g[numLigne+mot.length()][numColonne].estRecouverte()==false){
-                    //Manque si la zone avec case avec jeton et case sans jeton, si la lettre du jeton est la même que celle du mot à placer dans la case, et si le mot est présent dans le chevalet.
+                for(int i=numLigne; i<numLigne+mot.length(); i++){
+                    if(this.g[i][numColonne].estRecouverte() && this.g[i][numColonne].getLettre()==mot.charAt(i)){
+                        mot2.deleteCharAt(i);
+                        caseRecouverte++;
+                    }else{
+                        caseVide++;
+                    }
+                }
+                if(numLigne+mot.length()<=15){
+                    if(this.g[numLigne-1][numColonne].estRecouverte()==false || numLigne==0){
+                        if(this.g[numLigne+mot.length()][numColonne].estRecouverte()==false || numLigne+mot.length()==15){
+                            if(caseRecouverte>=1 && caseVide>=1){
+                                if(e.contient(mot2.toString())){
+                                    res = true;
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
         return res;
     }
 
-    public int nbPointsPlacement(String mot, int numLigne, int numColonne, char sens, int[] nbPointsJetons){
+    /**
+     * Méthode nbPointsPlacement
+     * Action: Calcule tous les points rapportés par le placement d'un mot, à l'aide de la valeur de la case, et la valeur 
+     * des lettres du mot.
+     * 
+     * @param mot
+     * @param numLigne
+     * @param numColonne
+     * @param sens
+     * @param nbPointsJetons
+     * @return un entier res.
+     */
+    public int nbPointsPlacement(String mot, int numLigne, int numColonne, char sens, int[] nbPointsJet){
         int res=0;
+        int multiplicateur = 0;
+        if(sens == 'h'){
+            for(int i=0; i<mot.length(); i++){
+                int valeurCaseH = nbPointsJet[Ut.majToIndex(mot.charAt(i))];
+                if(this.g[numLigne][numColonne+i].getCouleur()==2){
+                    valeurCaseH = valeurCaseH * 2;
+                }else if(this.g[numLigne][numColonne+i].getCouleur()==3){
+                    valeurCaseH = valeurCaseH * 3;
+                }
+                res = res + valeurCaseH;
+            }
+            for(int i = numColonne; i<numColonne+mot.length(); i++){
+                if(this.g[numLigne][i].getCouleur()==4){
+                    multiplicateur = multiplicateur + 2;
+                }else if(this.g[numLigne][i].getCouleur()==5){
+                    multiplicateur = multiplicateur + 3;
+                }
+            }
+            res = res * multiplicateur;
+        }
+        else if(sens == 'v'){
+            for(int i=0; i<mot.length(); i++){
+                int valeurCaseV = nbPointsJet[Ut.majToIndex(mot.charAt(i))];
+                if(this.g[numLigne+i][numColonne].getCouleur()==2){
+                    valeurCaseV = valeurCaseV * 2;
+                }else if(this.g[numLigne+i][numColonne].getCouleur()==3){
+                    valeurCaseV = valeurCaseV * 3;
+                }
+                res = res + valeurCaseV;
+            }
+            for(int i=numLigne; i<numLigne+mot.length(); i++){
+                if(this.g[i][numColonne].getCouleur()==4){
+                    multiplicateur = multiplicateur + 2;
+                }else if(this.g[i][numColonne].getCouleur()==5){
+                    multiplicateur = multiplicateur + 3;
+                }
+            }
+            res = res * multiplicateur;
+        }
         return res;
     }
 
     public int place(String mot, int numLigne, int numColonne, char sens, MEE e){
         int res = 0;
-        return res;
-    }
+        if(placementValide(mot, numLigne, numColonne, sens, e)){
 
-    public static void main (String[]args){
-        Plateau p = new Plateau();
-        Ut.afficher(p.toString());
+        }
+        return res;
     }
 
 }

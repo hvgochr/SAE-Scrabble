@@ -49,7 +49,7 @@ public class Case {
 
     /**
      * Méthode estRecouverte
-     * Action: Initialise un booléen res, qui prendre la valeur vrai si la case est
+     * Action: Initialise un booléen res, qui prendra la valeur vrai si la case est
      * recouverte.
      * 
      * @return un booleén res

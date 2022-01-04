@@ -7,7 +7,7 @@ public class MEE {
      * Constructeur MEE
      * Pré-requis: max >= O
      * Action: Crée un multi-ensemble MEE vide dont les éléments sont inférieurs à
-     * max
+     * max.
      * 
      * @param max
      */
@@ -20,17 +20,15 @@ public class MEE {
      * Constructeur MEE
      * Pré-requis: les éléments de tab sont positifs ou nuls
      * Action: Crée un multi-ensemble MEE dont le tableau de fréquences est une
-     * copie de tab
+     * copie de tab.
      * 
      * @param tab
      */
     public MEE(int[] tab) {
-        for (int i = 0; i < tab.length; i++) {
-            this.tabFreq[i] = tab[i];
-        }
         this.nbTotEx = 0;
-        for (int i = 0; i < this.tabFreq.length; i++) {
-            this.nbTotEx = this.nbTotEx + tabFreq[i];
+        this.tabFreq = tab;
+        for (int i = 0; i<this.tabFreq.length; i++){
+            this.nbTotEx = this.nbTotEx + this.tabFreq[i];
         }
     }
 
@@ -74,7 +72,7 @@ public class MEE {
     /**
      * Méthode ajoute
      * Pré-requis: 0 <= i < tabFreq.length
-     * Action: Ajoute un exemplaire de i à l'ensemble this
+     * Action: Ajoute un exemplaire de i à l'ensemble this.
      * 
      * @param i
      * @return void
@@ -88,7 +86,7 @@ public class MEE {
      * Méthode retire
      * Pré-requis: 0 <= i < tabFreq.length
      * Action: Retire un exemplaire de i de this s'il en existe un, et retourne vrai
-     * si cette action a pu être effectuée
+     * si cette action a pu être effectuée.
      * 
      * @param i
      * @return un booléen res
@@ -108,7 +106,7 @@ public class MEE {
     /**
      * Méthode retireAleat
      * Pré-requis: this est non vide
-     * Action: Retire un exemplaire de this choisi aléatoirement et le retourne
+     * Action: Retire un exemplaire de this choisi aléatoirement et le retourne.
      * 
      * @return un entier i
      */
@@ -123,7 +121,7 @@ public class MEE {
      * Méthode transfère
      * Pré-requis: 0 <= i < tabFreq.length
      * Action: Transfère un exemplaire de i de this vers e, s'il en existe, et
-     * retourne vrai si cette action a pu être effectuée
+     * retourne vrai si cette action a pu être effectuée.
      * 
      * @param e
      * @param i
@@ -145,7 +143,7 @@ public class MEE {
      * Méthode transfereAleat
      * Pré-requis: k >= 0
      * Action: transfère k exemplaires choisis aléatoirement de this vers e dans la
-     * limite du contenu de this
+     * limite du contenu de this.
      * 
      * @param e
      * @param k
@@ -163,7 +161,7 @@ public class MEE {
      * Méthode sommeValeurs
      * Pré-requis: tabFreq.length <= v.length
      * Action: retourne la somme des valeurs des exemplaires des éléments de this,
-     * la valeur d'un exemplaire d'un élément de this étant égal à v[i]
+     * la valeur d'un exemplaire d'un élément de this étant égal à v[i].
      * 
      * @param v
      * @return un entier res
@@ -185,11 +183,47 @@ public class MEE {
      */
     public String toString() {
         String res = "{";
-        for (int i = 0; i < this.nbTotEx - 1; i++) {
-            res = res + this.tabFreq[i] + " , ";
+        for (int i=0; i<this.tabFreq.length-1; i++){
+            res = res + tabFreq[i] + ",";
         }
-        res = res + this.tabFreq[this.nbTotEx - 1] + "}";
+        res = res + this.tabFreq[tabFreq.length -1] + "}";
         return res;
+    }
+
+    /**
+     * Méthode contient
+     * Action: Prend en paramètre un mot, et vérifie si chaque caractère de ce mot est présent dans this.
+     * 
+     * @param mot
+     * @return un booléen res
+     */
+    public boolean contient(String mot) {
+        boolean res = true;
+        int i=0;
+        if(mot.length()<=this.tabFreq.length){
+            while(res==true && i<mot.length()){
+                for(int j=0; j<this.tabFreq.length; j++){
+                    if(this.tabFreq[j]==Ut.majToIndex(mot.charAt(i))){
+                        i++;
+                    }
+                    else{
+                        res = false;
+                    }
+                }
+            }
+        }else{
+            res=false;
+        }
+        return res;
+    }
+
+    public static void main (String[]args){
+        String mot = "TEST";
+        int[]chevalet={19, 4, 18, 19};
+        MEE e = new MEE(chevalet);
+        MEE e1 = new MEE(12);
+        Ut.afficher(e1.toString());
+        Ut.afficher(e.contient("TEST"));
     }
 
 }

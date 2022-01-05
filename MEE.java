@@ -48,10 +48,19 @@ public class MEE {
      * Accesseur en lecture de l'attribut nbTotEx (utile pour savoir si un ensemble
      * est vide sans parcourir le tableau).
      * 
-     * @return un entier this.nbTotEx
+     * @return un entier this.nbTotEx.
      */
     public int getNbTotEx() {
         return this.nbTotEx;
+    }
+
+    /**
+     * Accesseur en lecture de l'attribut tabFreq.
+     * 
+     * @return un tableau d'entiers this.tabFreq.
+     */
+    public int[] getTabFreq() {
+        return this.tabFreq;
     }
 
     /**
@@ -59,7 +68,7 @@ public class MEE {
      * Action: Parcourt le tableau du multi-ensemble this et retourne vrai si
      * l'ensemble est vide.
      * 
-     * @return un booléen res
+     * @return un booléen res.
      */
     public boolean estVide() {
         boolean res = false;
@@ -168,8 +177,12 @@ public class MEE {
      */
     public int sommeValeurs(int[] v) {
         int res = 0;
-        for (int i = 0; i < this.tabFreq.length; i++) {
-            res = res + (this.tabFreq[i] * v[i]);
+        if(this.estVide()){
+            res = 0;
+        }else{
+            for (int i = 0; i < this.tabFreq.length; i++) {
+                res = res + (this.tabFreq[i] * v[i]);
+            }
         }
         return res;
     }
@@ -184,7 +197,7 @@ public class MEE {
     public String toString() {
         String res = "{";
         for (int i=0; i<this.tabFreq.length-1; i++){
-            res = res + tabFreq[i] + ",";
+            res = res + tabFreq[i] + ", ";
         }
         res = res + this.tabFreq[tabFreq.length -1] + "}";
         return res;
@@ -215,15 +228,6 @@ public class MEE {
             res=false;
         }
         return res;
-    }
-
-    public static void main (String[]args){
-        String mot = "TEST";
-        int[]chevalet={19, 4, 18, 19};
-        MEE e = new MEE(chevalet);
-        MEE e1 = new MEE(12);
-        Ut.afficher(e1.toString());
-        Ut.afficher(e.contient("TEST"));
     }
 
 }

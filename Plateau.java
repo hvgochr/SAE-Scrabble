@@ -71,6 +71,29 @@ public class Plateau {
     }
 
     /**
+     * Méthode capeloDico
+     * Action: Demande à l'utilisateur de vérifier si le mot est valide dans un dictionnaire, retourne vrai si le mot est valide, faux si le mot ne l'est pas.
+     * 
+     * @param mot
+     * @return un booléen res.
+     */
+    public boolean capeloDico(String mot){
+        boolean res = false;
+        Ut.afficherSL("Le mot "+mot+" est il valide?\n Saisir '1' si oui, '2' sinon."); int reponse = Ut.saisirEntier();
+        if(reponse == 1 || reponse == 2){
+            if(reponse == 1){
+                res = true;
+            }else if(reponse == 2){
+                res = false;
+            }
+        }else{
+            Ut.afficherSL("Entrez un choix valide.");
+            capeloDico(mot);
+        }
+        return res;
+    }
+
+    /**
      * Méthode placementValide
      * Action: Vérifie toutes les conditions pour que le placement d'un mot soit valide au scrabble, et retourne vrai si 
      * toutes ces conditions sont valides.

@@ -46,6 +46,8 @@ public class Plateau {
      * Action: Initialise une chaîne de caractères qui affichera le plateau avec
      * notamment les indices de colonnes, les indices de lignes, et le contenu de ce
      * plateau.
+     * 
+     * @return une chaîne de caractères res.
      */
     public String toString() {
         String res = "      C01 | C02 | C03 | C04 | C05 | C06 | C07 | C08 | C09 | C10 | C11 | C12 | C13 | C14 | C15 "
@@ -78,7 +80,7 @@ public class Plateau {
      * @param numColonne
      * @param sens
      * @param e
-     * @return un booléen res
+     * @return un booléen res.
      */
     public boolean placementValide(String mot, int numLigne, int numColonne, char sens, MEE e){
         boolean res = false;
@@ -207,11 +209,48 @@ public class Plateau {
         }
         return res;
     }
-
+    
+    /**
+     * Méthode place
+     * Action: place le mot voulu par l'utilisateur sur la grille / plateau de Scrabble, et retourne le nombre de jetons retirés de e.
+     * 
+     * @param mot
+     * @param numLigne
+     * @param numColonne
+     * @param sens
+     * @param e
+     * @return un entier res.
+     */
     public int place(String mot, int numLigne, int numColonne, char sens, MEE e){
         int res = 0;
         if(placementValide(mot, numLigne, numColonne, sens, e)){
-
+            if(sens=='h'){
+                for(int i=numColonne; i<numColonne+mot.length(); i++){
+                    int j=0;
+                    while(j<=mot.length()){
+                        if(this.g[numLigne][i].estRecouverte()==false){
+                            this.g[numLigne][i].setLettre(mot.charAt(i));
+                            e.retire(Ut.majToIndex(mot.charAt(j)));
+                            res++;
+                        }else{
+                            j++;
+                        }
+                    }
+                }
+            }else if(sens=='v'){
+                for(int i=numLigne; i<numLigne+mot.length(); i++){
+                    int j=0;
+                    while(j<=mot.length()){
+                        if(this.g[i][numColonne].estRecouverte()==false){
+                            this.g[i][numLigne].setLettre(mot.charAt(i));
+                            e.retire(Ut.majToIndex(mot.charAt(j)));
+                            res++;
+                        }else{
+                            j++;
+                        }
+                    }
+                }
+            }
         }
         return res;
     }

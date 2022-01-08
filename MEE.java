@@ -25,8 +25,8 @@ public class MEE {
      * @param tab
      */
     public MEE(int[] tab) {
-        this.nbTotEx = 0;
         this.tabFreq = tab;
+        this.nbTotEx = 0;
         for (int i = 0; i<this.tabFreq.length; i++){
             this.nbTotEx = this.nbTotEx + this.tabFreq[i];
         }
@@ -102,12 +102,10 @@ public class MEE {
      */
     public boolean retire(int i) {
         boolean res = false;
-        for (int j = 0; j < this.nbTotEx - 1; j++) {
-            if (this.tabFreq[j] == i) {
-                this.tabFreq[j] = this.tabFreq[j] - 1;
-                this.nbTotEx = this.nbTotEx - 1;
-                res = true;
-            }
+        if(this.tabFreq[i]>0){
+            this.tabFreq[i]--;
+            this.nbTotEx--;
+            res = true;
         }
         return res;
     }
@@ -138,12 +136,10 @@ public class MEE {
      */
     public boolean transfere(MEE e, int i) {
         boolean res = false;
-        for (int j = 0; j < tabFreq.length; j++) {
-            if (this.tabFreq[j] == i) {
-                this.retire(i);
-                e.ajoute(i);
-                res = true;
-            }
+        if(this.tabFreq[i]>0){
+            this.retire(i);
+            e.ajoute(i);
+            res = true;
         }
         return res;
     }
@@ -159,11 +155,17 @@ public class MEE {
      * @return un entier res
      */
     public int transfereAleat(MEE e, int k) {
-        for (int j = k; j > 0; j--) {
-            int i = Ut.randomMinMax(0, this.tabFreq.length - 1);
-            this.transfere(e, i);
+        int res = 0;
+        int i = 1;
+        int random = 0;
+        while(i<=k){
+            random = Ut.randomMinMax(0, (this.tabFreq.length-1));
+            if(this.transfere(e, random)==true){
+                res ++;
+            }
+            i++;
         }
-        return k;
+        return res;
     }
 
     /**
@@ -195,37 +197,13 @@ public class MEE {
      * @return une chaîne de caractères res
      */
     public String toString() {
-        String res = "{";
-        for (int i=0; i<this.tabFreq.length-1; i++){
-            res = res + tabFreq[i] + ", ";
-        }
-        res = res + this.tabFreq[tabFreq.length -1] + "}";
-        return res;
-    }
-
-    /**
-     * Méthode contient
-     * Action: Prend en paramètre un mot, et vérifie si chaque caractère de ce mot est présent dans this.
-     * 
-     * @param mot
-     * @return un booléen res
-     */
-    public boolean contient(String mot) {
-        boolean res = true;
-        int i=0;
-        if(mot.length()<=this.tabFreq.length){
-            while(res==true && i<mot.length()){
-                for(int j=0; j<this.tabFreq.length; j++){
-                    if(this.tabFreq[j]==Ut.majToIndex(mot.charAt(i))){
-                        i++;
-                    }
-                    else{
-                        res = false;
-                    }
+        String res = "";
+        for(int i=0; i<this.tabFreq.length-1; i++){
+            if(this.tabFreq[i]!=0){
+                for(int j=0; j<this.tabFreq[i]; j++){
+                    res = res + "[" + Ut.indexToMaj(i) + "] ";
                 }
             }
-        }else{
-            res=false;
         }
         return res;
     }

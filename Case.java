@@ -1,7 +1,6 @@
 public class Case {
 
     private int couleur;
-    private boolean recouverte;
     private char lettre;
 
     /**
@@ -14,6 +13,7 @@ public class Case {
      */
     public Case(int uneCouleur) {
         this.couleur = uneCouleur;
+        this.lettre = 0;
     }
 
     /**
@@ -56,7 +56,7 @@ public class Case {
      */
     public boolean estRecouverte() {
         boolean res = false;
-        if (this.recouverte == true) {
+        if (this.lettre != 0) {
             res = true;
         }
         return res;
@@ -71,17 +71,14 @@ public class Case {
      */
     public String toString() {
         String res = "";
-        if (estRecouverte()) {
-            if (Character.isLowerCase(this.lettre)) {
-                Character.toUpperCase(this.lettre);
-            }
-            res = res + this.lettre;
-        } else {
-            if (this.couleur != 1) {
-                res = res + this.couleur;
+        if (this.estRecouverte()==false) {
+            if (this.getCouleur() != 1) {
+                res = res + this.getCouleur();
             } else {
                 res = res + " ";
             }
+        } else {
+            res = res + this.getLettre();
         }
         return res;
     }

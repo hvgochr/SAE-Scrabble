@@ -18,14 +18,14 @@ Voici un sommaire de l'organisation de ce ReadMe:
     Le but de ce projet est de programmer une partie du fameux jeu de Scrabble entièrement en Java. Pour cela, un sujet avec des indications plutôt claires nous a été fourni au début de ce projet. Chaque joueur dispose alors au début de la partie de 7 jetons (ou moins lorsque la pioche est vide), et pose à tour de rôle un mot sur le plateau, qui lui fait gagner un nombre de points selon la valeur des lettres du mot ainsi que la valeur des cases sur lesquelles le mot est posé. Si le joueur réalise un "Scrabble" (mot de 7 lettres), il gagne un bonus de 50 points supplémentaires.
     Le jeu est censé comporter deux versions, une avec et une sans extensions. Malheureusement, par manque de temps, mais aussi d'expérience dans le domaine, la version avec extensions n'a pu être réalisée.
 
-[Retour Au Début](#SAE-1:-Jeu-de-Scrabble)
+[Retour Au Début](#Sommaire)
 
 ---
 
 ## Comment télécharger le jeu?
 
-    1. Pour télécharger le jeux vous devez vous rendre sur le site: [Github](https://github.com/hvgochr/Scrabble)
-    2. Puis ensuite, vous devrez vous rendre dans la section releases: [Release](https://github.com/hvgochr/Scrabble/releases)
+    1. Pour télécharger le jeux vous devez vous rendre sur le site: (https://github.com/hvgochr/Scrabble)
+    2. Puis ensuite, vous devrez vous rendre dans la section releases: (https://github.com/hvgochr/Scrabble/releases)
     3. Vous trouverez dans cet onglet toutes les versions du jeu. Cliquez de préférence sur la dernière.
     4. Vous ouvrirez alors ensuite l'onglet Assets.
     5. Puis, dès lors que vous cliquerez sur un fichier, il s'ajoutera à vos téléchargements. Déplacez le fichier souhaité à l'endroit souhaité.
@@ -33,7 +33,7 @@ Voici un sommaire de l'organisation de ce ReadMe:
     7. Un fois que vous êtes dans le dossier courant, il faut compiler MainScrabble en écrivant "javac MainScrabble.java"
     8. Vous n'avez plus qu'à exécuter MainScrabble en écrivant "java MainScrabble.java"
     
-[Retour Au Début](#SAE-1:-Jeu-de-Scrabble)
+[Retour Au Début](#Sommaire)
 
 ---
 
@@ -42,4 +42,4 @@ Voici un sommaire de l'organisation de ce ReadMe:
 - Théo DUBERNET - theo.dubernet@etu.umontpellier.fr
 - Hugo CHARRADE - hugo.charrade@etu.umontpellier.fr
 
-[Retour Au Début](#SAE-1:-Jeu-de-Scrabble)
+[Retour Au Début](#Sommaire)

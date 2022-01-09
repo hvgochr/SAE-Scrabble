@@ -179,12 +179,13 @@ public class Plateau {
         }
         // Cas où le plateau n'est pas vide, et donc que la case centrale est
         // recouverte.
-        else if(this.g[7][7].estRecouverte() == true){
+        else if (this.g[7][7].estRecouverte() == true) {
             // Cas où le plateau n'est pas vide, et que le sens de placement du mot est
             // horizontal.
             if (sens == 'h') {
                 for (int i = 0; i < mot.length() - 1; i++) {
-                    if (this.g[numLigne][numColonne + i].estRecouverte() && this.g[numLigne][numColonne + i].getLettre() == mot.charAt(i)) {
+                    if (this.g[numLigne][numColonne + i].estRecouverte()
+                            && this.g[numLigne][numColonne + i].getLettre() == mot.charAt(i)) {
                         mot2.deleteCharAt(i);
                         caseRecouverte++;
                     } else if (this.g[numLigne][numColonne + i].estRecouverte() == false) {
@@ -210,7 +211,8 @@ public class Plateau {
             // vertical.
             else if (sens == 'v') {
                 for (int i = 0; i < mot.length() - 1; i++) {
-                    if (this.g[numLigne + i][numColonne].estRecouverte() && this.g[numLigne + i][numColonne].getLettre() == mot.charAt(i)) {
+                    if (this.g[numLigne + i][numColonne].estRecouverte()
+                            && this.g[numLigne + i][numColonne].getLettre() == mot.charAt(i)) {
                         mot2.deleteCharAt(i);
                         caseRecouverte++;
                     } else if (this.g[numLigne + i][numColonne].estRecouverte() == false) {
@@ -309,17 +311,15 @@ public class Plateau {
         int j = 0;
         if (sens == 'h') {
             for (int i = numColonne; i < numColonne + mot.length(); i++) {
-                if (e.retire(Ut.majToIndex(mot.charAt(j)))) {
-                    res = res + 1;
-                }
+                e.retire(Ut.majToIndex(mot.charAt(j)));
+                res = res + 1;
                 g[numLigne][i].setLettre(mot.charAt(j));
                 j++;
             }
         } else if (sens == 'v') {
             for (int i = numLigne; i < numLigne + mot.length(); i++) {
-                if (e.retire(Ut.majToIndex(mot.charAt(j)))) {
-                    res = res + 1;
-                }
+                e.retire(Ut.majToIndex(mot.charAt(j)));
+                res = res + 1;
                 g[i][numColonne].setLettre(mot.charAt(j));
                 j++;
             }

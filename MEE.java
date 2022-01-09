@@ -199,7 +199,7 @@ public class MEE {
     public String toString() {
         String res = "";
         for (int i = 0; i < this.tabFreq.length - 1; i++) {
-            if (this.tabFreq[i] != 0) {
+            if (this.tabFreq[i] > 0) {
                 for (int j = 0; j < this.tabFreq[i]; j++) {
                     res = res + "[" + Ut.indexToMaj(i) + "] ";
                 }

@@ -265,7 +265,7 @@ public class Ut {
 	 * @return
 	 */
 	public static int majToIndex(char c) {
-		return (int) (c - 65);
+		return (int)c - 65;
 	}
 
 	/**
@@ -277,7 +277,7 @@ public class Ut {
 	 * @return
 	 */
 	public static char indexToMaj(int i) {
-		return (char) (i + 65);
+		return (char)(i + 65);
 	}
 
 } // end class

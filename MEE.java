@@ -27,7 +27,7 @@ public class MEE {
     public MEE(int[] tab) {
         this.tabFreq = tab;
         this.nbTotEx = 0;
-        for (int i = 0; i<this.tabFreq.length; i++){
+        for (int i = 0; i < this.tabFreq.length; i++) {
             this.nbTotEx = this.nbTotEx + this.tabFreq[i];
         }
     }
@@ -102,9 +102,9 @@ public class MEE {
      */
     public boolean retire(int i) {
         boolean res = false;
-        if(this.tabFreq[i]>0){
-            this.tabFreq[i]--;
-            this.nbTotEx--;
+        if (this.tabFreq[i] > 0) {
+            this.tabFreq[i] = this.tabFreq[i] - 1;
+            this.nbTotEx = this.nbTotEx - 1;
             res = true;
         }
         return res;
@@ -136,7 +136,7 @@ public class MEE {
      */
     public boolean transfere(MEE e, int i) {
         boolean res = false;
-        if(this.tabFreq[i]>0){
+        if (this.tabFreq[i] > 0) {
             this.retire(i);
             e.ajoute(i);
             res = true;
@@ -158,10 +158,10 @@ public class MEE {
         int res = 0;
         int i = 1;
         int random = 0;
-        while(i<=k){
-            random = Ut.randomMinMax(0, (this.tabFreq.length-1));
-            if(this.transfere(e, random)==true){
-                res ++;
+        while (i <= k) {
+            random = Ut.randomMinMax(0, (this.tabFreq.length - 1));
+            if (this.transfere(e, random) == true) {
+                res++;
             }
             i++;
         }
@@ -179,9 +179,9 @@ public class MEE {
      */
     public int sommeValeurs(int[] v) {
         int res = 0;
-        if(this.estVide()){
+        if (this.estVide()) {
             res = 0;
-        }else{
+        } else {
             for (int i = 0; i < this.tabFreq.length; i++) {
                 res = res + (this.tabFreq[i] * v[i]);
             }
@@ -198,9 +198,9 @@ public class MEE {
      */
     public String toString() {
         String res = "";
-        for(int i=0; i<this.tabFreq.length-1; i++){
-            if(this.tabFreq[i]!=0){
-                for(int j=0; j<this.tabFreq[i]; j++){
+        for (int i = 0; i < this.tabFreq.length - 1; i++) {
+            if (this.tabFreq[i] != 0) {
+                for (int j = 0; j < this.tabFreq[i]; j++) {
                     res = res + "[" + Ut.indexToMaj(i) + "] ";
                 }
             }

@@ -306,25 +306,25 @@ public class Plateau {
      * @param e
      * @return un entier res.
      */
-    public int place(String mot, int numLigne, int numColonne, char sens, MEE e) {
+    public int place(String mot, int numLigne, int numColonne, char sens, MEE e){
         int res = 0;
-        int j = 0;
-        if (sens == 'h') {
-            for (int i = numColonne; i < numColonne + mot.length(); i++) {
-                e.retire(Ut.majToIndex(mot.charAt(j)));
-                res = res + 1;
-                g[numLigne][i].setLettre(mot.charAt(j));
-                j++;
+        if(sens == 'h'){
+            for(int i=numColonne; i<numColonne + mot.length(); i++){
+                if(this.g[numLigne][i].estRecouverte()==false){
+                    this.g[numLigne][i].setLettre(mot.charAt(i-numColonne));
+                    e.retire(Ut.majToIndex(mot.charAt(i-numColonne)));
+                    res = res + 1;
+                }
             }
-        } else if (sens == 'v') {
-            for (int i = numLigne; i < numLigne + mot.length(); i++) {
-                e.retire(Ut.majToIndex(mot.charAt(j)));
-                res = res + 1;
-                g[i][numColonne].setLettre(mot.charAt(j));
-                j++;
+        }else{
+            for(int i=numLigne; i<numLigne+mot.length(); i++){
+                if(this.g[i][numColonne].estRecouverte()==false){
+                    this.g[i][numColonne].setLettre(mot.charAt(i-numLigne));
+                    e.retire(Ut.majToIndex(mot.charAt(i-numLigne)));
+                    res = res + 1;
+                }
             }
-        }
-        return res;
+        }return res;
     }
 
 }

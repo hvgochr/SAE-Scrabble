@@ -71,7 +71,7 @@ public class Case {
      */
     public String toString() {
         String res = "";
-        if (this.estRecouverte()==false) {
+        if (this.estRecouverte() == false) {
             if (this.getCouleur() != 1) {
                 res = res + this.getCouleur();
             } else {

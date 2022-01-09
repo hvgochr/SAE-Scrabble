@@ -36,8 +36,7 @@ public class Scrabble {
         boolean stop = false;
         int passe = 0;
         for (int i = 0; i < this.joueurs.length; i++) {
-            this.joueurs[i].prendJetons(this.sac, 7);
-            while(this.joueurs[i].getChevalet().getNbTotEx()<7){
+            while (this.joueurs[i].getChevalet().getNbTotEx() < 7) {
                 this.joueurs[i].prendJetons(this.sac, 1);
             }
         }
@@ -55,12 +54,12 @@ public class Scrabble {
                 }
             } else if (joue == 1) {
                 stop = true;
-                int sommePointsChevalet = 0;
+                int sommePtsChevalet = 0;
                 for (int i = 0; i < joueurs.length; i++) {
-                    sommePointsChevalet = sommePointsChevalet + joueurs[i].nbPointsChevalet(nbPointsJet);
+                    sommePtsChevalet = sommePtsChevalet + joueurs[i].nbPointsChevalet(nbPointsJet);
                     joueurs[i].ajouteScore(-joueurs[i].nbPointsChevalet(nbPointsJet));
                 }
-                joueurs[this.numJoueur].ajouteScore(sommePointsChevalet);
+                joueurs[this.numJoueur].ajouteScore(sommePtsChevalet);
             }
             if (this.numJoueur == joueurs.length - 1 && stop == false) {
                 this.numJoueur = 0;

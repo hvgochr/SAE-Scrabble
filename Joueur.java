@@ -143,7 +143,7 @@ public class Joueur {
     public boolean joueMot(Plateau p, MEE s, int[] nbPointsJet) {
         boolean res = false;
         Ut.afficherSL(p.toString());
-        Ut.afficherSL("Voici votre chevalet: " + this.chevalet.toString());
+        Ut.afficherSL("Voici votre chevalet: " + this.getChevalet().toString());
         Ut.afficherSL("Dans quel sens voulez vous placer le mot?\nSaisir 'h' pour horizontal, 'v' pour vertical.");
         char sens = Ut.saisirCaractere();
         while (sens != 'h' && sens != 'v') {
@@ -185,12 +185,7 @@ public class Joueur {
      */
     public void joueMotAux(Plateau p, MEE s, int[] nbPointsJet, String mot, int numLigne, int numColonne, char sens) {
         p.place(mot, numLigne, numColonne, sens, this.chevalet);
-        for (int i = 0; i < mot.length(); i++) {
-            this.chevalet.ajoute(Ut.randomMinMax(0, 25));
-        }
-        while (this.chevalet.getNbTotEx() < 7) {
-            this.chevalet.ajoute(Ut.randomMinMax(0, 25));
-        }
+        this.prendJetons(s, 7 - mot.length());
         this.ajouteScore(p.nbPointsPlacement(mot, numLigne, numColonne, sens, nbPointsJet));
         if (mot.length() == 7) {
             this.ajouteScore(50);

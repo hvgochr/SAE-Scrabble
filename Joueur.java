@@ -4,38 +4,74 @@ public class Joueur {
     private MEE chevalet;
     private int score;
 
+    /**
+     * Constructeur Joueur
+     * Action: Crée un Joueur dont le nom sera la chaîne de caractères passée en
+     * paramètre.
+     * 
+     * @param unNom
+     */
     public Joueur(String unNom) {
         this.nom = unNom;
         this.score = 0;
         this.chevalet = new MEE(26);
     }
 
+    /**
+     * Méthode toString
+     * Action: Affichage du nom de this ainsi que de son score.
+     * 
+     * @return une chaîne de caractères res
+     */
     public String toString() {
-        String res = "joueur "+this.nom+" possède "+this.score+" points.\n";
+        String res = "joueur " + this.nom + " possède " + this.score + " points.\n";
         return res;
     }
 
+    /**
+     * Accesseur en lecture de l'attribut chevalet.
+     * 
+     * @return un MEE this.chevalet
+     */
     public MEE getChevalet() {
         return this.chevalet;
     }
 
+    /**
+     * Accesseur en lecture de l'attribut score.
+     * 
+     * @return un entier this.score
+     */
     public int getScore() {
         return this.score;
     }
 
+    /**
+     * Méthode ajouteScore
+     * Action: Ajoute nb points au score de this.
+     * 
+     * @param nb
+     * @return void
+     */
     public void ajouteScore(int nb) {
         this.score = this.score + nb;
     }
 
-    public String getNom(){
+    /**
+     * Accesseur en lecture de l'attribut nom.
+     * 
+     * @return un chaîne de caractères this.nom
+     */
+    public String getNom() {
         return this.nom;
     }
 
     /**
-     * pré-requis : nbPointsJet indique le nombre de points rapportés par
-     * chaque jeton/lettre
-     * résultat : le nombre de points total sur le chevalet de ce joueur
-     * suggestion : bien relire la classe MEE !
+     * Méthode nbPointsChevalet
+     * Action: Compte le nombre de points du chevalet actuel de this et le retourne.
+     * 
+     * @param nbPointsJet
+     * @return en entier res
      */
     public int nbPointsChevalet(int[] nbPointsJet) {
         int res = this.chevalet.sommeValeurs(nbPointsJet);
@@ -43,43 +79,50 @@ public class Joueur {
     }
 
     /**
-     * pré-requis : les éléments de s sont inférieurs à 26
-     * action : simule la prise de nbJetons jetons par this dans le sac s,
-     * dans la limite de son contenu.
+     * Méthode prendJetons
+     * Action: Simule la prise de nbjetons par this dans la pioche s.
+     * 
+     * @param s
+     * @param nbJetons
+     * @return void
      */
     public void prendJetons(MEE s, int nbJetons) {
         s.transfereAleat(this.chevalet, nbJetons);
     }
 
     /**
-     * pré-requis : les éléments de s sont inférieurs à 26
-     * et nbPointsJet.length >= 26
-     * action : simule le coup de this : this choisit de passer son tour,
-     * d’échanger des jetons ou de placer un mot
-     * résultat : -1 si this a passé son tour, 1 si son chevalet est vide,
-     * et 0 sinon
+     * Méthode joue
+     * Action: Demande à this ce qu'il souhaite faire lors du tour actuel: passer
+     * son tour, échanger des jetons, ou placer un mot.
+     * 
+     * @param p
+     * @param s
+     * @param nbPointsJet
+     * @return un entier res
      */
     public int joue(Plateau p, MEE s, int[] nbPointsJet) {
         int res = 0;
         Ut.afficherSL("Voici l'état du plateau actuel:\n" + p.toString());
         Ut.afficherSL("Voici votre chevalet: " + this.getChevalet().toString() + ".");
-        Ut.afficherSL(this.nom +", que souhaitez-vous faire?\nTapez '1' pour passer votre tour.\nTapez '2' pour échanger.\nTapez '3' pour placer.");
+        Ut.afficherSL(this.nom
+                + ", que souhaitez-vous faire?\nTapez '1' pour passer votre tour.\nTapez '2' pour échanger.\nTapez '3' pour placer.");
         int reponse = Ut.saisirEntier();
-        while(reponse != 1 && reponse != 2 && reponse != 3){
+        while (reponse != 1 && reponse != 2 && reponse != 3) {
             Ut.afficher("Le choix entré n'est pas valide.");
-            Ut.afficherSL(this.nom +", que souhaitez-vous faire?\nTapez '1' pour passer votre tour.\nTapez '2' pour échanger.\nTapez '3' pour placer.");
+            Ut.afficherSL(this.nom
+                    + ", que souhaitez-vous faire?\nTapez '1' pour passer votre tour.\nTapez '2' pour échanger.\nTapez '3' pour placer.");
             reponse = Ut.saisirEntier();
         }
-        if(reponse == 1){
+        if (reponse == 1) {
             res = -1;
-        }else if(reponse == 2){
+        } else if (reponse == 2) {
             this.echangeJetons(s);
             res = 0;
-        }else if(reponse == 3){
-            if(joueMot(p, s, nbPointsJet)==true){
-                if(this.chevalet.estVide()==true){
+        } else if (reponse == 3) {
+            if (joueMot(p, s, nbPointsJet) == true) {
+                if (this.chevalet.estVide() == true) {
                     res = 1;
-                }else{
+                } else {
                     res = 0;
                 }
             }
@@ -88,59 +131,89 @@ public class Joueur {
     }
 
     /**
-     * pré-requis : les éléments de s sont inférieurs à 26
-     * et nbPointsJet.length >= 26
-     * action : simule le placement d’un mot de this (le mot, sa position
-     * sur le plateau et sa direction, sont saisies au clavier)
-     * résultat : vrai ssi ce coup est valide, c’est-à-dire accepté par
-     * CapeloDico et satisfaisant les règles détaillées plus haut
+     * Méthode joueMot
+     * Action: Simule le placement d'un mot de this. On demande alors la ligne, la
+     * colonne, le mot et le sens de placement souhaité.
+     * 
+     * @param p
+     * @param s
+     * @param nbPointsJet
+     * @return un booléen res
      */
     public boolean joueMot(Plateau p, MEE s, int[] nbPointsJet) {
         boolean res = false;
         Ut.afficherSL(p.toString());
         Ut.afficherSL("Voici votre chevalet: " + this.chevalet.toString());
-        Ut.afficherSL("Dans quel sens voulez vous placer le mot?\nSaisir 'h' pour horizontal, 'v' pour vertical."); char sens = Ut.saisirCaractere();
-        while(sens!='h' && sens!='v'){
+        Ut.afficherSL("Dans quel sens voulez vous placer le mot?\nSaisir 'h' pour horizontal, 'v' pour vertical.");
+        char sens = Ut.saisirCaractere();
+        while (sens != 'h' && sens != 'v') {
             Ut.afficherSL("La saisie entrée n'est pas valide.");
-            Ut.afficherSL("Dans quel sens voulez vous placer le mot?\nSaisir 'h' pour horizontal, 'v' pour vertical."); sens = Ut.saisirCaractere();
+            Ut.afficherSL("Dans quel sens voulez vous placer le mot?\nSaisir 'h' pour horizontal, 'v' pour vertical.");
+            sens = Ut.saisirCaractere();
         }
-        Ut.afficherSL("Sur quelle ligne voulez-vous placer le mot?"); int numLigne = Ut.saisirEntier()-1;
-        Ut.afficherSL("Sur quelle colonne voulez-vous placer le mot?"); int numColonne = Ut.saisirEntier()-1;
-        Ut.afficherSL("Quel est le mot que vous voulez placer?"); String mot = Ut.saisirChaine();
-        if(p.placementValide(mot, numLigne, numColonne, sens, this.chevalet)==true){
+        Ut.afficherSL("Sur quelle ligne voulez-vous placer le mot?");
+        int numLigne = Ut.saisirEntier() - 1;
+        Ut.afficherSL("Sur quelle colonne voulez-vous placer le mot?");
+        int numColonne = Ut.saisirEntier() - 1;
+        Ut.afficherSL("Quel est le mot que vous voulez placer?");
+        String mot = Ut.saisirChaine();
+        if (p.placementValide(mot, numLigne, numColonne, sens, this.chevalet) == true) {
             joueMotAux(p, s, nbPointsJet, mot, numLigne, numColonne, sens);
             res = true;
-            Ut.afficherSL(this.nom+", votre score est désormais de: "+this.score+" points.");
-        }else if (p.placementValide(mot, numLigne, numColonne, sens, this.chevalet)==false){
-            Ut.afficherSL("Le placement voulu n'est pas valide. Passage au joueur suivant.");
+            Ut.afficherSL(this.nom + ", votre score est désormais de: " + this.score + " points.");
+        } else if (p.placementValide(mot, numLigne, numColonne, sens, this.chevalet) == false) {
+            Ut.afficherSL("Le placement voulu n'est pas valide. Au tour du joueur suivant.");
             res = false;
         }
         return res;
     }
 
-    /** pré-requis : cf. joueMot et le placement de mot à partir de la case
-     *               (numLig, numCol) dans le sens donné par sens est valide
-     *  action : simule le placement d’un mot de this
+    /**
+     * Méthode joueMotAux
+     * Action: Effectue toutes les actions du jeu d'un joueur: placement du mot,
+     * rajout des lettres manquantes dans le chevalet, ajout des points au score du
+     * joueur.
+     * 
+     * @param p
+     * @param s
+     * @param nbPointsJet
+     * @param mot
+     * @param numLigne
+     * @param numColonne
+     * @param sens
+     * @return void
      */
     public void joueMotAux(Plateau p, MEE s, int[] nbPointsJet, String mot, int numLigne, int numColonne, char sens) {
         p.place(mot, numLigne, numColonne, sens, this.chevalet);
-        for(int i=this.chevalet.getNbTotEx(); i<7; i++){
-            this.prendJetons(s, 1);
-            Ut.afficherSL(this.nom + "prend un jeton.");
+        for (int i = 0; i < mot.length(); i++) {
+            this.chevalet.ajoute(Ut.randomMinMax(0, 25));
+        }
+        while (this.chevalet.getNbTotEx() < 7) {
+            this.chevalet.ajoute(Ut.randomMinMax(0, 25));
         }
         this.ajouteScore(p.nbPointsPlacement(mot, numLigne, numColonne, sens, nbPointsJet));
-        if(mot.length()==7){
+        if (mot.length() == 7) {
             this.ajouteScore(50);
         }
     }
 
+    /**
+     * Méthode contient
+     * Action: Vérifie si une chaîne de caractères est bien présente dans un
+     * ensemble, utile pour vérifier si le joueur possède les lettres qu'il souhaite
+     * placer.
+     * 
+     * @param chaine
+     * @param e
+     * @return un booléen res.
+     */
     public boolean contient(String chaine, MEE e) {
         boolean res = true;
         int[] tabChevalet = this.chevalet.getTabFreq();
         int x = 0;
         while (res && x < chaine.length()) {
             if (tabChevalet[Ut.majToIndex(chaine.charAt(x))] != 0) {
-                tabChevalet[Ut.majToIndex(chaine.charAt(x))] = tabChevalet[Ut.majToIndex(chaine.charAt(x))] -1;
+                tabChevalet[Ut.majToIndex(chaine.charAt(x))] = tabChevalet[Ut.majToIndex(chaine.charAt(x))] - 1;
                 x++;
             } else {
                 res = false;
@@ -150,47 +223,62 @@ public class Joueur {
     }
 
     /**
-     * pré-requis : les éléments de sac sont inférieurs à 26
-     * action : simule l’échange de jetons de ce joueur
+     * Méthode echangeJetons
+     * Action: Effectue la saisie des caractères que le joueur souhaite échanger,
+     * puis simule l'échange de ces jetons.
+     * 
+     * @param sac
+     * @retunr void
      */
     public void echangeJetons(MEE sac) {
-        Ut.afficherSL("Entrez les lettres en majuscule que vous souhaitez échanger."); String chaine = Ut.saisirChaine();
-        while(this.estCorrectPourEchange(chaine)==false){
-            Ut.afficherSL("Entrez les lettres en majuscule que vous souhaitez échanger."); chaine = Ut.saisirChaine();
+        Ut.afficherSL("Entrez les lettres en majuscule que vous souhaitez échanger.");
+        String chaine = Ut.saisirChaine();
+        while (this.estCorrectPourEchange(chaine) == false) {
+            Ut.afficherSL("Entrez les lettres en majuscule que vous souhaitez échanger.");
+            chaine = Ut.saisirChaine();
         }
         echangeJetonsAux(sac, chaine);
     }
 
-    /** résultat : vrai ssi les caractères de mot correspondent tous à des
-     *             lettres majuscules et l’ensemble de ces caractères est un
-     *             sous-ensemble des jetons du chevalet de this
+    /**
+     * Méthode estCorrectPourEchange
+     * Action: Vérifie toutes les conditions des jetons que le joueur souhaite
+     * échanger: toutes les lettres sont des majuscules, et les lettres qui doivent
+     * être échangées sont un sous ensemble du chevalet.
+     * 
+     * @param chaine
+     * @return un booléen res.
      */
-    public boolean estCorrectPourEchange (String chaine) {
+    public boolean estCorrectPourEchange(String chaine) {
         boolean res = true;
-        for(int i=0; i<chaine.length(); i++){
-            if(Ut.estUneMajuscule(chaine.charAt(i))==false){
-                res=false;
+        for (int i = 0; i < chaine.length(); i++) {
+            if (Ut.estUneMajuscule(chaine.charAt(i)) == false) {
+                res = false;
             }
         }
-        if(res==false){
+        if (res == false) {
             Ut.afficherSL("Une ou plusieurs lettres saisies ne sont pas en majuscule.");
         }
-        if(contient(chaine, this.chevalet)){
+        if (contient(chaine, this.chevalet)) {
             res = true;
-        }else{
+        } else {
             res = false;
             Ut.afficherSL("Une ou plusieurs lettres saisies ne sont pas présentes dans votre chevalet.");
         }
         return res;
     }
 
-    /** pré-requis : sac peut contenir des entiers de 0 à 25 et ensJetons
-     *               est un ensemble de jetons correct pour l’échange
-     *  action : simule l’échange de jetons de ensJetons avec des
-     *           jetons du sac tirés aléatoirement.
+    /**
+     * Méthode echangeJetonsAux
+     * Action: Effectue un échange entre des jetons de ensJetons et des jetons du
+     * sac tirés aléatoirement.
+     * 
+     * @param sac
+     * @param ensJetons
+     * @retunr void
      */
     public void echangeJetonsAux(MEE sac, String ensJetons) {
-        for(int i=0; i<ensJetons.length(); i++){
+        for (int i = 0; i < ensJetons.length(); i++) {
             int lettre = Ut.majToIndex(ensJetons.charAt(i));
             sac.transfereAleat(this.chevalet, 1);
             this.chevalet.transfere(sac, lettre);

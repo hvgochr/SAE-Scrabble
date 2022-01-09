@@ -14,9 +14,18 @@ Voici un sommaire de l'organisation de ce ReadMe:
 
 ## Le Projet:
 
-    Ce projet entre dans le cadre de la SAE 1 en Développement initiatique du 1er Semestre de 1ère année en BUT Informatique. 
-    Le but de ce projet est de programmer une partie du fameux jeu de Scrabble entièrement en Java. Pour cela, un sujet avec des indications plutôt claires nous a été fourni au début de ce projet. Chaque joueur dispose alors au début de la partie de 7 jetons (ou moins lorsque la pioche est vide), et pose à tour de rôle un mot sur le plateau, qui lui fait gagner un nombre de points selon la valeur des lettres du mot ainsi que la valeur des cases sur lesquelles le mot est posé. Si le joueur réalise un "Scrabble" (mot de 7 lettres), il gagne un bonus de 50 points supplémentaires.
-    Le jeu est censé comporter deux versions, une avec et une sans extensions. Malheureusement, par manque de temps, mais aussi d'expérience dans le domaine, la version avec extensions n'a pu être réalisée.
+    Ce projet entre dans le cadre de la SAE 1 en Développement initiatique du 1er Semestre de 
+    1ère année en BUT Informatique. 
+    Le but de ce projet est de programmer une partie du fameux jeu de Scrabble entièrement en
+    Java. Pour cela, un sujet avec des indications plutôt claires nous a été fourni au début de 
+    ce projet. Chaque joueur dispose alors au début de la partie de 7 jetons (ou moins lorsque 
+    la pioche est vide), et pose à tour de rôle un mot sur le plateau, qui lui fait gagner un 
+    nombre de points selon la valeur des lettres du mot ainsi que la valeur des cases sur 
+    lesquelles le mot est posé. Si le joueur réalise un "Scrabble" (mot de 7 lettres), il gagne 
+    un bonus de 50 points supplémentaires.
+    Le jeu est censé comporter deux versions, une avec et une sans extensions. Malheureusement, 
+    par manque de temps, mais aussi d'expérience dans le domaine, la version avec extensions 
+    n'a pu être réalisée.
 
 [Retour Au Début](#SAE-1:-Jeu-de-Scrabble)
 
